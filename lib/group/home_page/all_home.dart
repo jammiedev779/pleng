@@ -1,65 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:pleng/group/components/discover_menu.dart';
+import 'package:pleng/group/main_menu/main_menu.dart';
+import 'package:pleng/group/headbar/head_bar.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text('Pleng', style: TextStyle(color: Colors.tealAccent, fontSize: 24)),
-        actions: [
-          Icon(Icons.notifications_none, color: Colors.white),
-          CircleAvatar(
-            backgroundColor: Colors.grey,
-            child: Icon(Icons.person, color: Colors.white),
-          ),
-          SizedBox(width: 16),
-        ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(48.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text('All', style: TextStyle(color: Colors.white)),
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.white24,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text('Music Charts', style: TextStyle(color: Colors.white)),
-                ),
-              ),
-              Expanded(
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text('Discover Playlists', style: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: HeadBar(),
       body: Container(
-        color: Colors.grey[900], 
+        color: Colors.grey[900],
         child: SingleChildScrollView(
           child: Column(
             children: [
+              DiscoverMenu(),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildAvatar('https://i.pravatar.cc/100?img=1', 'PlockNun'),
+                    _buildAvatar('https://i.pravatar.cc/100?img=1', 'PlockLeang'),
                     _buildAvatar('https://i.pravatar.cc/100?img=2', 'GayChhi'),
                     _buildAvatar('https://i.pravatar.cc/100?img=3', 'Therayu'),
                     _buildAvatar('https://i.pravatar.cc/100?img=4', 'G-Devith'),
@@ -74,19 +39,6 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Discover'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: CircleAvatar(backgroundImage: NetworkImage('https://randomuser.me/api/portraits/women/11.jpg'),), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.video_library), label: 'Videos'),
-          BottomNavigationBarItem(icon: Icon(Icons.library_music), label: 'Library'),
-        ],
-        selectedItemColor: Colors.tealAccent,
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.black,
-        type: BottomNavigationBarType.fixed,
       ),
     );
   }
