@@ -7,61 +7,10 @@ import 'package:pleng/group/main_menu/main_menu.dart';
 import 'package:pleng/group/headbar/head_bar.dart';
 
 class HomePage extends StatelessWidget {
-  final VoidCallback toggleTheme;
-
-  const HomePage({Key? key, required this.toggleTheme}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: AppBar(
-        title: Text('Pleng'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.brightness_6), 
-            onPressed: toggleTheme,
-          ),
-          Icon(Icons.notifications_none),
-          CircleAvatar(
-            backgroundColor: Colors.grey,
-            child: Icon(Icons.person),
-          ),
-          SizedBox(width: 16),
-        ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(48.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text('All'),
-                ),
-              ),
-              Expanded(
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MusicChartPage(), // Navigate to MusicChartPage
-                    ));
-                  },
-                  child: Text('Music Charts'),
-                ),
-              ),
-              Expanded(
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DiscoverPlaylistsPage(), // Navigate to DiscoverPlaylistsPage
-                    ));
-                  },
-                  child: Text('Discover Playlists'),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
       appBar: HeadBar(),
       body: Container(
         color: Colors.grey[900],
@@ -75,11 +24,16 @@ class HomePage extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      _buildAvatar(context,'https://i.pravatar.cc/100?img=1', 'PlockNun'),
-                      _buildAvatar(context,'https://i.pravatar.cc/100?img=2', 'GayChhi'),
-                      _buildAvatar(context,'https://i.pravatar.cc/100?img=3', 'Therayu'),
-                      _buildAvatar(context,'https://i.pravatar.cc/100?img=4', 'G-Devith'),
-                      _buildAvatar(context,'https://i.pravatar.cc/100?img=5', 'Narin'),
+                      _buildAvatar(context, 'https://i.pravatar.cc/100?img=1',
+                          'PlockNun'),
+                      _buildAvatar(context, 'https://i.pravatar.cc/100?img=2',
+                          'GayChhi'),
+                      _buildAvatar(context, 'https://i.pravatar.cc/100?img=3',
+                          'Therayu'),
+                      _buildAvatar(context, 'https://i.pravatar.cc/100?img=4',
+                          'G-Devith'),
+                      _buildAvatar(
+                          context, 'https://i.pravatar.cc/100?img=5', 'Narin'),
                     ],
                   ),
                 ),
@@ -96,22 +50,8 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Discover'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: CircleAvatar(backgroundImage: NetworkImage('https://randomuser.me/api/portraits/women/11.jpg'),), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.video_library), label: 'Videos'),
-          BottomNavigationBarItem(icon: Icon(Icons.library_music), label: 'Library'),
-        ],
-        selectedItemColor: Colors.tealAccent,
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.black,
-        type: BottomNavigationBarType.fixed,
-      ),
     );
   }
-
 
   Widget _buildAvatar(BuildContext context, String imageUrl, String name) {
     return GestureDetector(
@@ -142,7 +82,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-
   Widget _buildSectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -158,7 +97,7 @@ class HomePage extends StatelessWidget {
 
   Widget _buildExclusiveReleases() {
     return Container(
-      height: 180,  // Adjust height as needed
+      height: 180, // Adjust height as needed
       child: PageView(
         children: [
           _buildExclusiveReleasesPage(
@@ -241,7 +180,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-
   Widget _buildSpecialPlaylists() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -249,16 +187,27 @@ class HomePage extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            _buildPlaylistCard('https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg', 'Top Songs'),
-            _buildPlaylistCard('https://rukminim2.flixcart.com/image/850/1000/kb5eikw0/poster/v/p/k/large-music-posters-for-room-set-of-6-best-music-posters-vintage-original-imafskknrpzzfcpq.jpeg?q=90&crop=false', 'Still Viral'),
-            _buildPlaylistCard('https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg', 'New Albums'),
-            _buildPlaylistCard('https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg', 'New Albums'),
-            _buildPlaylistCard('https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg', 'New Albums'),
+            _buildPlaylistCard(
+                'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
+                'Top Songs'),
+            _buildPlaylistCard(
+                'https://rukminim2.flixcart.com/image/850/1000/kb5eikw0/poster/v/p/k/large-music-posters-for-room-set-of-6-best-music-posters-vintage-original-imafskknrpzzfcpq.jpeg?q=90&crop=false',
+                'Still Viral'),
+            _buildPlaylistCard(
+                'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
+                'New Albums'),
+            _buildPlaylistCard(
+                'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
+                'New Albums'),
+            _buildPlaylistCard(
+                'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
+                'New Albums'),
           ],
         ),
       ),
     );
   }
+
   Widget _buildPlaylistCard(String imageUrl, String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -281,6 +230,7 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildAllCollections() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -288,15 +238,22 @@ class HomePage extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            _buildCollectionCard('https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg', 'Top Songs'),
-            _buildCollectionCard('https://rukminim2.flixcart.com/image/850/1000/kb5eikw0/poster/v/p/k/large-music-posters-for-room-set-of-6-best-music-posters-vintage-original-imafskknrpzzfcpq.jpeg?q=90&crop=false', 'Still Viral'),
-            _buildCollectionCard('https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg', 'New Albums'),
+            _buildCollectionCard(
+                'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
+                'Top Songs'),
+            _buildCollectionCard(
+                'https://rukminim2.flixcart.com/image/850/1000/kb5eikw0/poster/v/p/k/large-music-posters-for-room-set-of-6-best-music-posters-vintage-original-imafskknrpzzfcpq.jpeg?q=90&crop=false',
+                'Still Viral'),
+            _buildCollectionCard(
+                'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
+                'New Albums'),
           ],
         ),
       ),
     );
   }
-    Widget _buildCollectionCard(String imageUrl, String title) {
+
+  Widget _buildCollectionCard(String imageUrl, String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
@@ -318,6 +275,4 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-  
 }
-

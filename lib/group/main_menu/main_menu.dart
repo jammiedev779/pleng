@@ -34,7 +34,7 @@ class _MainMenuState extends State<MainMenu> {
   Widget _buildBody() {
     return IndexedStack(
       index: _selectedIndex,
-      children: [HomePage(), Search(), CurrentPlay(), Video(), Library()],
+      children: [HomePage(),Search(), CurrentPlay(), Video(), Library()],
     );
   }
 

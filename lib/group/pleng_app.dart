@@ -10,22 +10,12 @@ class PlengApp extends StatefulWidget {
 }
 
 class _PlengAppState extends State<PlengApp> {
-  ThemeMode _themeMode = ThemeMode.light;
-
-  void _toggleTheme() {
-    setState(() {
-      _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      themeMode: _themeMode,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      home: MainMenu(toggleTheme: _toggleTheme),
+      home: MainMenu(),
     );
   }
 }
