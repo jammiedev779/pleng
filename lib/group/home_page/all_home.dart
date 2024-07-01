@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
                   child: Row(
                     children: [
                       _buildAvatar(context, 'https://i.pravatar.cc/100?img=1',
-                          'PlockNun'),
+                          'PlockLeang'),
                       _buildAvatar(context, 'https://i.pravatar.cc/100?img=2',
                           'GayChhi'),
                       _buildAvatar(context, 'https://i.pravatar.cc/100?img=3',
