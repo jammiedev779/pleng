@@ -1,10 +1,36 @@
 import 'package:flutter/material.dart';
 
-class StoryPage extends StatelessWidget {
+class StoryPage extends StatefulWidget {
   final String imageUrl;
   final String userName;
 
   const StoryPage({Key? key, required this.imageUrl, required this.userName}) : super(key: key);
+
+  @override
+  _StoryPageState createState() => _StoryPageState();
+}
+
+class _StoryPageState extends State<StoryPage> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(seconds: 10),
+      vsync: this,
+    )..forward().whenComplete(() => Navigator.of(context).pop());
+
+    _controller.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,21 +39,42 @@ class StoryPage extends StatelessWidget {
       body: Stack(
         children: [
           Center(
-            child: AspectRatio(
-              aspectRatio: 9 / 16,  // Common aspect ratio for stories
-              child: Image.network(imageUrl, fit: BoxFit.cover),
+            child: AspectRatio( 
+              aspectRatio: 9 / 16,
+              child: Image.network(widget.imageUrl, fit: BoxFit.cover),
             ),
           ),
           Positioned(
-            top: 40,
+            top: 20,
             left: 16,
-            child: Row(
+            right: 16,
+            child: Column(
               children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(imageUrl),
+                SizedBox(height: 1),
+                Container(
+                  height: 2,
+                  child: LinearProgressIndicator(
+                    backgroundColor: Colors.grey,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    value: _controller.value,
+                  ),
                 ),
-                SizedBox(width: 8),
-                Text(userName, style: TextStyle(color: Colors.white, fontSize: 18)),
+                Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(widget.imageUrl),
+                    ),
+                    SizedBox(width: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(widget.userName, style: TextStyle(color: Colors.white, fontSize: 18)),
+                        Text('1h ago', style: TextStyle(color: Colors.white70, fontSize: 14)),
+                      ],
+                    ),
+                  ],
+                ),
+      
               ],
             ),
           ),
