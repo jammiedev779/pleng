@@ -55,9 +55,9 @@ class _MainMenuState extends State<MainMenu> {
             icon: Icon(Icons.library_music), label: 'Library'),
       ],
       currentIndex: _selectedIndex,
-      selectedItemColor: Colors.tealAccent,
+      selectedItemColor: const Color(0xFFffffff),
       unselectedItemColor: Colors.grey,
-      backgroundColor: Colors.black,
+      backgroundColor: Color(0xFF323232),
       type: BottomNavigationBarType.fixed,
       onTap: _onItemTapped,
     );
