@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class HeadBar extends StatefulWidget implements PreferredSizeWidget {
   @override
   _HeadBarState createState() => _HeadBarState();
@@ -12,13 +13,16 @@ class _HeadBarState extends State<HeadBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.black,
-      title: Text('Pleng',
-          style: TextStyle(color: Colors.tealAccent, fontSize: 24)),
+      backgroundColor: Color(0xFF1f1f1f),
+      title: Text("Pleng",
+      style: TextStyle(
+        fontSize: 40,
+        color: const Color(0xFF00994c)
+      ),),
       actions: [
         Icon(Icons.notifications_none, color: Colors.white),
         CircleAvatar(
-          backgroundColor: Colors.grey,
+          backgroundColor: Color(0xFF363636),
           child: Icon(Icons.person, color: Colors.white),
         ),
         SizedBox(width: 16),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pleng/group/headbar/head_bar.dart';
 
 class Video extends StatelessWidget {
   // const HomeScreen({super.key});
@@ -14,9 +15,12 @@ class Video extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    return Container(
-      color: const Color.fromARGB(255, 255, 59, 59),
-      alignment: Alignment.center,
+    return Scaffold(
+      appBar: HeadBar(),
+      body: Container(
+        color: Colors.grey[900],
+        alignment: Alignment.center,
+      ),
     );
   }
 }

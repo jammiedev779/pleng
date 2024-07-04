@@ -3,10 +3,21 @@ import 'package:pleng/group/components/home_page/discover_playlists.dart';
 import 'package:pleng/group/components/home_page/music_charts.dart';
 import 'package:pleng/group/components/home_page/story_page.dart';
 import 'package:pleng/group/components/discover_menu.dart';
-import 'package:pleng/group/main_menu/main_menu.dart';
 import 'package:pleng/group/headbar/head_bar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedTabIndex = 0;
+
+  void _onTabSelected(int index) {
+    setState(() {
+      _selectedTabIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,42 +25,74 @@ class HomePage extends StatelessWidget {
       appBar: HeadBar(),
       body: Container(
         color: Colors.grey[900],
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              DiscoverMenu(),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      _buildAvatar(context, 'https://i.pravatar.cc/100?img=1',
-                          'PlockLeang'),
-                      _buildAvatar(context, 'https://i.pravatar.cc/100?img=2',
-                          'GayChhi'),
-                      _buildAvatar(context, 'https://i.pravatar.cc/100?img=3',
-                          'Therayu'),
-                      _buildAvatar(context, 'https://i.pravatar.cc/100?img=4',
-                          'G-Devith'),
-                      _buildAvatar(
-                          context, 'https://i.pravatar.cc/100?img=5', 'Narin'),
-                    ],
-                  ),
+        child: Column(
+          children: [
+            DiscoverMenu(onTabSelected: _onTabSelected),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    if (_selectedTabIndex == 0) _buildAllContent(),
+                    if (_selectedTabIndex == 1) _buildMusicChart(),
+                    if (_selectedTabIndex == 2) _buildDiscover(),
+                  ],
                 ),
               ),
-              _buildSectionTitle('Pleng Exclusive Releases'),
-              _buildExclusiveReleases(),
-              _buildSectionTitle('Special Playlists by Pleng'),
-              _buildSpecialPlaylists(),
-              _buildSectionTitle('All hits'),
-              _buildSpecialPlaylists(),
-              _buildSectionTitle('Pleng Collection'),
-              _buildAllCollections(),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _buildAllContent() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                _buildAvatar(context, 'https://imageio.forbes.com/specials-images/imageserve/65efb06d83b262e59c7fb3e9/Talib-Kweli-Wireless-Festival-2015/960x0.jpg?height=473&width=711&fit=bounds', 'PlockNun'),
+                _buildAvatar(context, 'https://variety.com/wp-content/uploads/2024/02/Eminem.jpg', 'GayChhi'),
+                _buildAvatar(context, 'https://media.gq.com/photos/62e82bea11673c699e05492d/master/pass/bs5a3113.JPG', 'Kendrick'),
+                _buildAvatar(context, 'https://cdn.britannica.com/85/247585-050-13C54622/Rapper-Juice-WRLD-performs-Rolling-Loud-Festival-Los-Angeles-2018.jpg', 'Juice wrld'),
+                _buildAvatar(context, 'https://static01.nyt.com/images/2021/12/08/arts/06drake2/06drake2-mediumSquareAt3X.jpg', 'Drake'),
+               
+              ],
+            ),
+          ),
+        ),
+        _buildSectionTitle('Pleng Exclusive Releases'),
+        _buildExclusiveReleases(),
+        _buildSectionTitle('Special Playlists by Pleng'),
+        _buildSpecialPlaylists(),
+        _buildSectionTitle('All hits'),
+        _buildSpecialPlaylists(),
+        _buildSectionTitle('Pleng Collection'),
+        _buildAllCollections(),
+      ],
+    );
+  }
+  Widget _buildMusicChart() {
+    return Column(
+      children: [
+        _buildSectionTitle('Special Playlists by Pleng'),
+        _buildSpecialPlaylists(),
+        _buildSectionTitle('All hits'),
+        _buildSpecialPlaylists(),
+      ],
+    );
+  }
+    Widget _buildDiscover() {
+    return Column(
+      children: [
+        _buildSectionTitle('Special Playlists by Pleng'),
+        _buildSpecialPlaylists(),
+        _buildSectionTitle('All hits'),
+        _buildSpecialPlaylists(),
+      ],
     );
   }
 
@@ -97,41 +140,9 @@ class HomePage extends StatelessWidget {
 
   Widget _buildExclusiveReleases() {
     return Container(
-      height: 180, // Adjust height as needed
+      height: 180,
       child: PageView(
         children: [
-          _buildExclusiveReleasesPage(
-            [
-              _buildExclusiveReleaseItem(
-                'https://i.pinimg.com/474x/4d/32/5c/4d325cf1ba05cb71037e17467e5083bd.jpg',
-                'Leak Tuk (Live Acoustic Cover)',
-              ),
-              _buildExclusiveReleaseItem(
-                'https://union.illinois.edu/sites/default/files/2024-05/kLOopsjpSX1Wb1h8Vg57t7YEwD6.jpg',
-                'Love Consult (Live Acoustic)',
-              ),
-              _buildExclusiveReleaseItem(
-                'https://cdn.marvel.com/content/1x/thorloveandthunder_lob_crd_04.jpg',
-                'Linju Meas Bong (Live Acoustic Cover)',
-              ),
-            ],
-          ),
-          _buildExclusiveReleasesPage(
-            [
-              _buildExclusiveReleaseItem(
-                'https://i.pinimg.com/474x/4d/32/5c/4d325cf1ba05cb71037e17467e5083bd.jpg',
-                'Leak Tuk (Live Acoustic Cover)',
-              ),
-              _buildExclusiveReleaseItem(
-                'https://union.illinois.edu/sites/default/files/2024-05/kLOopsjpSX1Wb1h8Vg57t7YEwD6.jpg',
-                'Love Consult (Live Acoustic)',
-              ),
-              _buildExclusiveReleaseItem(
-                'https://cdn.marvel.com/content/1x/thorloveandthunder_lob_crd_04.jpg',
-                'Linju Meas Bong (Live Acoustic Cover)',
-              ),
-            ],
-          ),
           _buildExclusiveReleasesPage(
             [
               _buildExclusiveReleaseItem(
@@ -196,12 +207,6 @@ class HomePage extends StatelessWidget {
             _buildPlaylistCard(
                 'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
                 'New Albums'),
-            _buildPlaylistCard(
-                'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
-                'New Albums'),
-            _buildPlaylistCard(
-                'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
-                'New Albums'),
           ],
         ),
       ),
@@ -239,14 +244,15 @@ class HomePage extends StatelessWidget {
         child: Row(
           children: [
             _buildCollectionCard(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ74F_RM69jaAlsm1EDvTF7KE16ziLofOdeLw&s',
+                'New Albums'),
+            _buildCollectionCard(
                 'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
-                'Top Songs'),
+                'Hits song'),
             _buildCollectionCard(
                 'https://rukminim2.flixcart.com/image/850/1000/kb5eikw0/poster/v/p/k/large-music-posters-for-room-set-of-6-best-music-posters-vintage-original-imafskknrpzzfcpq.jpeg?q=90&crop=false',
-                'Still Viral'),
-            _buildCollectionCard(
-                'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
-                'New Albums'),
+                'Trending'),
+         
           ],
         ),
       ),
@@ -259,8 +265,8 @@ class HomePage extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 220,
-            height: 140,
+            width: 270,
+            height: 150,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
@@ -275,4 +281,6 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  
 }
