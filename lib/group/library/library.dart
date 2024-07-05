@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pleng/group/components/library_menu.dart';
 import 'package:pleng/group/headbar/head_bar.dart';
 
 class Library extends StatefulWidget {
@@ -6,114 +7,113 @@ class Library extends StatefulWidget {
   _LibraryState createState() => _LibraryState();
 }
 
-class _LibraryState extends State<Library> with SingleTickerProviderStateMixin {
-  int _selectedIndex = 0;
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  void _onItemTapped(int index) {
+class _LibraryState extends State<Library> {
+  int _selectedTabIndex = 0;
+  void _onTabSelected(int index) {
     setState(() {
-      _selectedIndex = index;
+      _selectedTabIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: HeadBar(),
-        body: _selectedIndex == 1
-            ? SearchScreen()
-            : TabBarView(
-                controller: _tabController,
-                children: [
-                  MusicScreen(tabController: _tabController),
-                  Center(child: Text('Videos Screen')),
-                  Center(child: Text('My Device Screen')),
-                ],
+    return Scaffold(
+      appBar: HeadBar(),
+      body: Container(
+        color: Colors.grey[900],
+        child: Column(
+          children: [
+            LibraryMenu(onTabSelected: _onTabSelected),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    if (_selectedTabIndex == 0) _buildAll(),
+                    if (_selectedTabIndex == 1) _buildPlaylist(),
+                    if (_selectedTabIndex == 2) _buildAlbums(),
+                    if (_selectedTabIndex == 3) _buildPodCast(),
+                  ],
+                ),
               ),
+            ),
+          ],
+        ),
       ),
     );
   }
-}
 
-class MusicScreen extends StatelessWidget {
-  final TabController tabController;
-
-  MusicScreen({required this.tabController});
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
+  Widget _buildAll() {
+    return Center(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TabBar(
-            controller: tabController,
-            tabs: [
-              Tab(text: 'All'),
-              Tab(text: 'Playlists'),
-              Tab(text: 'Albums'),
-              Tab(text: 'Podcasts'),
-            ],
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.white,
-            indicator: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-          SizedBox(height: 20),
-          Center(
-            child: Column(
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.add),
-                  label: Text('Create a playlist'),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+          GestureDetector(
+            onTap: () {
+              // Action for creating a playlist
+            },
+            child: Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[850], // Background color similar to the UI
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.add,
+                    size: 40.0,
+                    color: Colors.white, // Icon color similar to the UI
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    'Create a playlist',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.white, // Text color similar to the UI
                     ),
                   ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 50.0),
+          Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Icon(
+                  Icons.headset,
+                  size: 100.0,
+                  color: Colors.white, // Adjust the color as needed
                 ),
-                SizedBox(height: 20),
-                Icon(Icons.music_note, size: 100, color: Colors.white),
-                SizedBox(height: 10),
+                SizedBox(height: 16.0),
                 Text(
                   'Nothing has been Added',
                   style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
+                    fontSize: 18.0,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white, // Adjust the color as needed
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 8.0),
                 Text(
                   'Browse songs, playlists, podcasts and albums to add to your favourites',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Explore Now'),
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                    textStyle: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.white, // Adjust the color as needed
                   ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    // Action for exploring
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+                  ),
+                  child: Text('Explore Now'),
                 ),
               ],
             ),
@@ -122,13 +122,14 @@ class MusicScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class SearchScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Search Screen'),
-    );
+  Widget _buildPlaylist() {
+    return Container();
+  }
+  Widget _buildAlbums() {
+    return Container();
+  }
+  Widget _buildPodCast() {
+    return Container();
   }
 }

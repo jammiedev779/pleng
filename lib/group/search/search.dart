@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pleng/group/components/search/search_detail_page.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -50,8 +51,7 @@ class _SearchState extends State<Search> {
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Music, Podcast, Artist and more',
-                    hintStyle: TextStyle(
-                        color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.white),
                     prefixIcon: Icon(Icons.search, color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -60,8 +60,7 @@ class _SearchState extends State<Search> {
                     filled: true,
                     fillColor: Colors.grey[800],
                   ),
-                  style: TextStyle(
-                      color: Colors.white),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
               Padding(
@@ -86,7 +85,18 @@ class _SearchState extends State<Search> {
                 ),
                 itemCount: images.length,
                 itemBuilder: (context, index) {
-                  return _buildRecommendedItem(index);
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PlaylistDetailScreen(imageUrl: images[index]),
+                        ),
+                      );
+                    },
+                    child: _buildRecommendedItem(index),
+                  );
                 },
               ),
             ],
