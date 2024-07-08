@@ -1,0 +1,133 @@
+// ignore_for_file: prefer_const_constructors
+import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:pleng/group/video/video_data.dart';
+import 'package:flutter/widgets.dart';
+
+class LivePerformanceGrid extends StatefulWidget {
+  @override
+  State<LivePerformanceGrid> createState() => _VideoState();
+}
+
+class _VideoState extends State<LivePerformanceGrid> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  
+  late List<YoutubePlayerController> _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = videoURLs.map((url) {
+      final videoID = YoutubePlayer.convertUrlToId(url);
+      return YoutubePlayerController(
+        initialVideoId: videoID!,
+        flags: const YoutubePlayerFlags(
+          autoPlay: false,
+        ),
+      );
+    }).toList();
+  }
+
+  @override
+  void dispose() {
+    _controller.forEach((controller) => controller.dispose());
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF1f1f1f),
+        title: Text(
+          "Live Performance",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      key: _scaffoldKey,
+      body: Container(
+        color: Colors.grey[900],
+        child: _buildVideoList(),
+      ),
+    );
+  }
+
+  Widget _buildVideoList() {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2, 
+        crossAxisSpacing: 8.0, 
+        childAspectRatio: 0.9,
+      ),
+      itemCount: videoURLs.length,
+      itemBuilder: (context, index) {
+        return _buildVideoItem(
+          videoURL: videoURLs[index],
+          title: videoTitles[index],
+          singer: videoSinger[index],
+          views: videoViews[index],
+          controller: _controller[index],
+        );
+      },
+    ),
+  );
+}
+
+  Widget _buildVideoItem({
+    required String videoURL,
+    required String title,
+    required String singer,
+    required String views,
+    required YoutubePlayerController controller,
+  }) {
+    final videoID = YoutubePlayer.convertUrlToId(videoURL);
+
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              width: 225,
+              height: 100,
+              child: YoutubePlayer(
+                controller: controller,
+                showVideoProgressIndicator: true,
+              ),
+            ),
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            singer,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+            ),
+          ),
+          Text(
+            views,
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
