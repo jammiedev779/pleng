@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pleng/group/components/search/search_detail_page.dart';
+import 'package:provider/provider.dart';
+import 'package:pleng/provider/theme_notifier.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -34,14 +36,16 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = context.watch<ThemeNotifier>();
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text('Search', style: TextStyle(color: Colors.white)),
+        backgroundColor: themeNotifier.isDarkMode ? Colors.black : Colors.white,
+        title: Text('Search', style: TextStyle(color: themeNotifier.isDarkMode ?Colors.white : Colors.black)),
         centerTitle: true,
       ),
       body: Container(
-        color: Colors.black,
+        color: themeNotifier.isDarkMode ? Colors.black : Color(0xFFffffff),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,16 +55,16 @@ class _SearchState extends State<Search> {
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Music, Podcast, Artist and more',
-                    hintStyle: TextStyle(color: Colors.white),
-                    prefixIcon: Icon(Icons.search, color: Colors.white),
+                    hintStyle: TextStyle(color: themeNotifier.isDarkMode ? Colors.white : Colors.black),
+                    prefixIcon: Icon(Icons.search, color: themeNotifier.isDarkMode ? Colors.white : Colors.black),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.grey[800],
+                    fillColor: themeNotifier.isDarkMode ? Colors.grey[800] : Colors.grey[400],
                   ),
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color:themeNotifier.isDarkMode ? Colors.white : Colors.black),
                 ),
               ),
               Padding(
@@ -70,7 +74,7 @@ class _SearchState extends State<Search> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
               ),

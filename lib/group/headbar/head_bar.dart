@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:pleng/provider/theme_notifier.dart';
 
 class HeadBar extends StatefulWidget implements PreferredSizeWidget {
   final VoidCallback onLanguageToggle;
   final bool isKhmer;
-   HeadBar({required this.onLanguageToggle, required this.isKhmer});
+  HeadBar({required this.onLanguageToggle, required this.isKhmer});
   @override
   _HeadBarState createState() => _HeadBarState();
 
@@ -15,18 +16,31 @@ class HeadBar extends StatefulWidget implements PreferredSizeWidget {
 class _HeadBarState extends State<HeadBar> {
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = context.watch<ThemeNotifier>();
+
     return AppBar(
-      backgroundColor: Color(0xFF1f1f1f),
-      title: Text("Pleng",
-      style: TextStyle(
-        fontSize: 40,
-        color: const Color(0xFF00994c)
-      ),),
+      backgroundColor:
+          themeNotifier.isDarkMode ? Color(0xFF1f1f1f) : Colors.white,
+      title: Text(
+        "Pleng",
+        style: TextStyle(fontSize: 40, color: const Color(0xFF00994c)),
+      ),
       actions: [
-        Icon(Icons.notifications_none, color: Colors.white),
+        Icon(Icons.notifications_none,
+            color: themeNotifier.isDarkMode ? Colors.white : Colors.black),
         IconButton(
-          icon: Icon(Icons.language, color: Colors.white),
+          icon: themeNotifier.isDarkMode
+              ? Icon(Icons.language, color: Colors.white)
+              : Icon(Icons.language, color: Colors.black),
           onPressed: widget.onLanguageToggle,
+        ),
+        IconButton(
+          icon: themeNotifier.isDarkMode
+              ? Icon(Icons.dark_mode, color: Colors.white)
+              : Icon(Icons.light_mode, color: Colors.black),
+          onPressed: () {
+            themeNotifier.toggleTheme();
+          },
         ),
         CircleAvatar(
           backgroundColor: Color(0xFF363636),
@@ -37,4 +51,3 @@ class _HeadBarState extends State<HeadBar> {
     );
   }
 }
-

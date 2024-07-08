@@ -6,6 +6,8 @@ import 'package:pleng/group/home_page/all_home.dart';
 import 'package:pleng/group/library/library.dart';
 import 'package:pleng/group/search/search.dart';
 import 'package:pleng/group/video/video.dart';
+import 'package:provider/provider.dart';
+import 'package:pleng/provider/theme_notifier.dart';
 
 class MainMenu extends StatefulWidget {
   @override
@@ -24,6 +26,8 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       key: _scaffoldKey,
       body: _buildBody(),
@@ -34,11 +38,12 @@ class _MainMenuState extends State<MainMenu> {
   Widget _buildBody() {
     return IndexedStack(
       index: _selectedIndex,
-      children: [HomePage(),Search(), CurrentPlay()],
+      children: [HomePage(),Search(), CurrentPlay(), Video(), Library()],
     );
   }
 
   Widget _buildBottomNav() {
+    final themeNotifier = context.watch<ThemeNotifier>();
     return BottomNavigationBar(
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Discover'),
@@ -55,9 +60,9 @@ class _MainMenuState extends State<MainMenu> {
             icon: Icon(Icons.library_music), label: 'Library'),
       ],
       currentIndex: _selectedIndex,
-      selectedItemColor: const Color(0xFFffffff),
-      unselectedItemColor: Colors.grey,
-      backgroundColor: Color(0xFF323232),
+      selectedItemColor: themeNotifier.isDarkMode ? const Color(0xFFffffff) : const Color(0xFF1f1f1f),
+      unselectedItemColor: const Color.fromARGB(255, 132, 132, 132),
+      backgroundColor: themeNotifier.isDarkMode ? Color(0xFF323232) : Color(0xFFffffff),
       type: BottomNavigationBarType.fixed,
       onTap: _onItemTapped,
     );

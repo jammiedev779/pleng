@@ -3,6 +3,8 @@ import 'package:pleng/group/components/home_page/detail_music.dart';
 import 'package:pleng/group/components/home_page/story_page.dart';
 import 'package:pleng/group/components/discover_menu.dart';
 import 'package:pleng/group/headbar/head_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:pleng/provider/theme_notifier.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,10 +30,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = context.watch<ThemeNotifier>();
+
     return Scaffold(
      appBar: HeadBar(onLanguageToggle: _toggleLanguage, isKhmer: _isKhmer),
       body: Container(
-        color: Colors.grey[900],
+        color: themeNotifier.isDarkMode ? Colors.grey[900] : Color(0xFFffffff),
         child: Column(
           children: [
             DiscoverMenu(onTabSelected: _onTabSelected),
@@ -107,6 +111,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildAvatar(BuildContext context, String imageUrl, String name, int index) {
+    final themeNotifier = context.watch<ThemeNotifier>();
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -141,7 +146,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: 8),
-            Text(name, style: TextStyle(color: Colors.white)),
+            Text(name, style: TextStyle(color: themeNotifier.isDarkMode ? Colors.white : Colors.black)),
           ],
         ),
       ),
@@ -149,12 +154,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildSectionTitle(String title) {
+    final themeNotifier = context.watch<ThemeNotifier>();
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyle(color: Colors.white, fontSize: 18)),
+          Text(title, style: TextStyle(color: themeNotifier.isDarkMode ? Colors.white : Colors.black, fontSize: 18)),
           Icon(Icons.chevron_right, color: Colors.white),
         ],
       ),
@@ -194,6 +201,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildExclusiveReleaseItem(String imageUrl, String title) {
+    final themeNotifier = context.watch<ThemeNotifier>();
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -205,7 +214,7 @@ class _HomePageState extends State<HomePage> {
       },
       child: ListTile(
         leading: _buildNetworkImage(imageUrl),
-        title: Text(title, style: TextStyle(color: Colors.white)),
+        title: Text(title, style: TextStyle(color: themeNotifier.isDarkMode ? Colors.white : Colors.black)),
       ),
     );
   }
@@ -330,6 +339,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildPlaylistCard(String imageUrl, String title) {
+    final themeNotifier = context.watch<ThemeNotifier>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
@@ -346,7 +357,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SizedBox(height: 8),
-          Text(title, style: TextStyle(color: Colors.white)),
+          Text(title, style: TextStyle(color: themeNotifier.isDarkMode ? Colors.white : Colors.black)),
         ],
       ),
     );
@@ -376,6 +387,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCollectionCard(String imageUrl, String title) {
+        final themeNotifier = context.watch<ThemeNotifier>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
@@ -392,7 +405,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SizedBox(height: 8),
-          Text(title, style: TextStyle(color: Colors.white)),
+          Text(title, style: TextStyle(color: themeNotifier.isDarkMode ? Colors.white : Colors.black)),
         ],
       ),
     );
