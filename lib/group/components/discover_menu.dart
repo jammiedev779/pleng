@@ -6,8 +6,14 @@ import 'package:pleng/provider/theme_notifier.dart';
 
 class DiscoverMenu extends StatefulWidget {
   final Function(int) onTabSelected;
+  final bool isKhmer;
+  final VoidCallback toggleLanguage;
 
-  DiscoverMenu({required this.onTabSelected});
+  DiscoverMenu({
+    required this.onTabSelected,
+    required this.isKhmer,
+    required this.toggleLanguage,
+  });
 
   @override
   _DiscoverMenuState createState() => _DiscoverMenuState();
@@ -31,9 +37,9 @@ class _DiscoverMenuState extends State<DiscoverMenu> {
       color: themeNotifier.isDarkMode ? Colors.grey[900] : Color(0xFFffffff),
       child: Row(
         children: [
-          _buildTabItem(0, 'All'),
-          _buildTabItem(1, 'Music Charts'),
-          _buildTabItem(2, 'Discover Playlists'),
+          _buildTabItem(0, widget.isKhmer ? 'ទាំងអស់' : 'All'),
+          _buildTabItem(1, widget.isKhmer ? 'តន្ត្រី' : 'Music Charts'),
+          _buildTabItem(2, widget.isKhmer ? 'ស្វែងរកបញ្ជីចម្រៀង' : 'Discover Playlists'),
         ],
       ),
     );

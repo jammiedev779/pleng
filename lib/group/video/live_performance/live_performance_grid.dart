@@ -7,6 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:pleng/provider/theme_notifier.dart';
 
 class LivePerformanceGrid extends StatefulWidget {
+  final bool isKhmer;
+  final VoidCallback toggleLanguage;
+
+  LivePerformanceGrid({required this.isKhmer, required this.toggleLanguage});
   @override
   State<LivePerformanceGrid> createState() => _VideoState();
 }
@@ -52,7 +56,7 @@ class _VideoState extends State<LivePerformanceGrid> {
           },
         ),
         title: Text(
-          "Live Performance",
+          widget.isKhmer ? 'ការសម្តែងផ្ទាល់':'Live Performance',
           style: TextStyle(
             color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
           ),

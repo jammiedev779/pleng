@@ -8,7 +8,7 @@ class HeadBar extends StatefulWidget implements PreferredSizeWidget {
   HeadBar({required this.onLanguageToggle, required this.isKhmer});
   @override
   _HeadBarState createState() => _HeadBarState();
-
+ 
   @override
   Size get preferredSize => Size.fromHeight(69.0);
 }

@@ -9,6 +9,10 @@ import 'package:provider/provider.dart';
 import 'package:pleng/provider/theme_notifier.dart';
 
 class MusicVideo extends StatefulWidget {
+  final bool isKhmer;
+  final VoidCallback toggleLanguage;
+
+  MusicVideo({required this.isKhmer, required this.toggleLanguage});
   @override
   State<MusicVideo> createState() => _VideoState();
 }
@@ -54,7 +58,7 @@ class _VideoState extends State<MusicVideo> {
   Widget _buildBody() {
     return Column(
       children: [
-        _buildScrollVideo('Music Videos'),
+        _buildScrollVideo( widget.isKhmer ? 'វីដេអូចម្រៀង':'Music Videos',),
         _buildVideoList(),
         // Add more widgets as needed
       ],
@@ -82,7 +86,7 @@ class _VideoState extends State<MusicVideo> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MusicVideoGrid(),
+                  builder: (context) => MusicVideoGrid(isKhmer: widget.isKhmer, toggleLanguage: widget.toggleLanguage),
                 ),
               );
             },

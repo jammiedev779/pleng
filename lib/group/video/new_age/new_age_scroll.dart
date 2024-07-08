@@ -9,6 +9,10 @@ import 'package:provider/provider.dart';
 import 'package:pleng/provider/theme_notifier.dart';
 
 class NewAgeScroll extends StatefulWidget {
+  final bool isKhmer;
+  final VoidCallback toggleLanguage;
+
+  NewAgeScroll({required this.isKhmer, required this.toggleLanguage});
   @override
   State<NewAgeScroll> createState() => _VideoState();
 }
@@ -54,7 +58,7 @@ class _VideoState extends State<NewAgeScroll> {
   Widget _buildBody() {
     return Column(
       children: [
-        _buildScrollVideo('New Age'),
+        _buildScrollVideo(widget.isKhmer ? 'ជំនាន់ថ្មី':'New Age'),
         _buildVideoList(),
         // Add more widgets as needed
       ],
@@ -82,7 +86,7 @@ class _VideoState extends State<NewAgeScroll> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NewAgeGrid(),
+                  builder: (context) => NewAgeGrid(isKhmer: widget.isKhmer, toggleLanguage: widget.toggleLanguage),
                 ),
               );
               // Handle onTap action here

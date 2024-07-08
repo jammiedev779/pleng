@@ -9,6 +9,10 @@ import 'package:provider/provider.dart';
 import 'package:pleng/provider/theme_notifier.dart';
 
 class LivePerformance extends StatefulWidget {
+    final bool isKhmer;
+  final VoidCallback toggleLanguage;
+
+  LivePerformance({required this.isKhmer, required this.toggleLanguage});
   @override
   State<LivePerformance> createState() => _VideoState();
 }
@@ -53,7 +57,7 @@ class _VideoState extends State<LivePerformance> {
   Widget _buildBodyLivePerformance() {
     return Column(
       children: [
-        _buildScrollVideo('Live Performance'),
+        _buildScrollVideo(widget.isKhmer ? 'ការសម្តែងផ្ទាល់':'Live Performance'),
         _buildVideoList(),
         // Add more widgets as needed
       ],
@@ -78,7 +82,7 @@ class _VideoState extends State<LivePerformance> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LivePerformanceGrid(),
+                  builder: (context) => LivePerformanceGrid(isKhmer: widget.isKhmer, toggleLanguage: widget.toggleLanguage),
                 ),
               );
             },

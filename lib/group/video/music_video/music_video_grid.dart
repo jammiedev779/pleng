@@ -7,6 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:pleng/provider/theme_notifier.dart';
 
 class MusicVideoGrid extends StatefulWidget {
+  final bool isKhmer;
+  final VoidCallback toggleLanguage;
+
+  MusicVideoGrid({required this.isKhmer, required this.toggleLanguage});
   @override
   State<MusicVideoGrid> createState() => _VideoState();
 }
@@ -52,7 +56,7 @@ class _VideoState extends State<MusicVideoGrid> {
           },
         ),
         title: Text(
-          "Music Video",
+          widget.isKhmer ? 'វីដេអូចម្រៀង':'Music Videos',
           style: TextStyle(
             color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
           ),

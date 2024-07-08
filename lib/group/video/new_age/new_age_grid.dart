@@ -7,6 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:pleng/provider/theme_notifier.dart';
 
 class NewAgeGrid extends StatefulWidget {
+  final bool isKhmer;
+  final VoidCallback toggleLanguage;
+
+  NewAgeGrid({required this.isKhmer, required this.toggleLanguage});
   @override
   State<NewAgeGrid> createState() => _VideoState();
 }
@@ -52,7 +56,7 @@ class _VideoState extends State<NewAgeGrid> {
           },
         ),
         title: Text(
-          "New Age",
+          widget.isKhmer ? 'ជំនាន់ថ្មី':'New Age',
           style: TextStyle(
             color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
           ),

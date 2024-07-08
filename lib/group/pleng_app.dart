@@ -11,12 +11,19 @@ class PlengApp extends StatefulWidget {
 }
 
 class _PlengAppState extends State<PlengApp> {
+  bool _isKhmer = false;
+
+  void _toggleLanguage() {
+    setState(() {
+      _isKhmer = !_isKhmer;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainMenu(),
+      home: MainMenu(isKhmer: _isKhmer, toggleLanguage: _toggleLanguage),
     );
   }
 }

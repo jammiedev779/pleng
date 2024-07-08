@@ -7,6 +7,11 @@ import 'package:provider/provider.dart';
 import 'package:pleng/provider/theme_notifier.dart';
 
 class HomePage extends StatefulWidget {
+  final bool isKhmer;
+  final VoidCallback toggleLanguage;
+
+  HomePage({required this.isKhmer, required this.toggleLanguage});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -14,17 +19,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedTabIndex = 0;
   Set<int> _viewedStories = {};
-  bool _isKhmer = false;
 
   void _onTabSelected(int index) {
     setState(() {
       _selectedTabIndex = index;
-    });
-  }
-
-  void _toggleLanguage() {
-    setState(() {
-      _isKhmer = !_isKhmer;
     });
   }
 
@@ -33,12 +31,16 @@ class _HomePageState extends State<HomePage> {
     final themeNotifier = context.watch<ThemeNotifier>();
 
     return Scaffold(
-     appBar: HeadBar(onLanguageToggle: _toggleLanguage, isKhmer: _isKhmer),
+      appBar: HeadBar(onLanguageToggle: widget.toggleLanguage, isKhmer: widget.isKhmer),
       body: Container(
         color: themeNotifier.isDarkMode ? Colors.grey[900] : Color(0xFFffffff),
         child: Column(
           children: [
-            DiscoverMenu(onTabSelected: _onTabSelected),
+            DiscoverMenu(
+              onTabSelected: _onTabSelected,
+              isKhmer: widget.isKhmer,
+              toggleLanguage: widget.toggleLanguage,
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -74,27 +76,27 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        _buildSectionTitle(_isKhmer ? 'ការចេញផ្សាយចំនួនគួរអោយទាក់ទាញ' : 'Pleng Exclusive Releases'),
+        _buildSectionTitle(widget.isKhmer ? 'ការចេញផ្សាយចំនួនគួរអោយទាក់ទាញ' : 'Pleng Exclusive Releases'),
         _buildExclusiveReleases(),
-        _buildSectionTitle(_isKhmer ? 'បញ្ជីចម្រៀងពិសេសដោយ Pleng' : 'Special Playlists by Pleng'),
+        _buildSectionTitle(widget.isKhmer ? 'បញ្ជីចម្រៀងពិសេសដោយ Pleng' : 'Special Playlists by Pleng'),
         _buildSpecialPlaylists1(),
-        _buildSectionTitle(_isKhmer ? 'ចម្រៀងទាំងអស់' : 'All hits'),
+        _buildSectionTitle(widget.isKhmer ? 'ចម្រៀងទាំងអស់' : 'All hits'),
         _buildSpecialPlaylists(),
-        _buildSectionTitle(_isKhmer ? 'ការចងក្រងនៃ Pleng' : 'Pleng Collection'),
+        _buildSectionTitle(widget.isKhmer ? 'ការចងក្រងនៃ Pleng' : 'Pleng Collection'),
         _buildAllCollections(),
       ],
     );
   }
-
   Widget _buildMusicChart() {
     return Column(
       children: [
-        _buildSectionTitle('Daily Choice'),
-        _buildSpecialPlaylists1(),
-        _buildSectionTitle('Top 50'),
-        _buildSpecialPlaylists2(),
-        _buildSectionTitle('Top 10 From Production Houses'),
+        _buildSectionTitle(widget.isKhmer ? 'កំពូលចម្រៀងទាំង 10 ពី Production': 'Top 10 From Production Houses'),
         _buildSpecialPlaylists3(),
+        _buildSectionTitle(widget.isKhmer ? 'ជម្រេីសប្រចាំថ្ងៃ' : 'Daily Choice'),
+        _buildSpecialPlaylists1(),
+        _buildSectionTitle(widget.isKhmer ? 'កំពូលចម្រៀងទាំង 50' : 'Top 50'),
+        _buildSpecialPlaylists2(),
+       
       ],
     );
   }
@@ -102,9 +104,9 @@ class _HomePageState extends State<HomePage> {
   Widget _buildDiscover() {
     return Column(
       children: [
-        _buildSectionTitle('Rainy Season Music'),
+        _buildSectionTitle(widget.isKhmer ? 'ចម្រៀងរដូវភ្លៀង' :'Rainy Season Music'),
         _buildSpecialPlaylists2(),
-        _buildSectionTitle('All hits'),
+        _buildSectionTitle(widget.isKhmer ? 'ចម្រៀងពេញនិយម' :'All hits'),
         _buildSpecialPlaylists4(),
       ],
     );
@@ -241,13 +243,13 @@ class _HomePageState extends State<HomePage> {
           children: [
             _buildPlaylistCard(
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5TsLPVDfw7wrmFrZrKoqh-YYKRRdjAX3RcQ&s',
-                'New Albums'),
+                widget.isKhmer ? 'អាល់ប៊ុមថ្មី' :'New Albums'),
             _buildPlaylistCard(
                 'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
-                'Top Songs'),
+                widget.isKhmer ? 'ចម្រៀងកំពូល' :'Top Songs'),
             _buildPlaylistCard(
                 'https://rukminim2.flixcart.com/image/850/1000/kb5eikw0/poster/v/p/k/large-music-posters-for-room-set-of-6-best-music-posters-vintage-original-imafskknrpzzfcpq.jpeg?q=90&crop=false',
-                'Still Viral'),
+                widget.isKhmer ? 'ចម្រៀងពេញនិយម' :'Still Viral'),
           ],
         ),
       ),
@@ -262,13 +264,13 @@ class _HomePageState extends State<HomePage> {
           children: [
             _buildPlaylistCard(
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUNZpluHFU5qGG0j5KZz2IBWhY52XRNddp7Q&s',
-                'Hot Release'),
+                 widget.isKhmer ? 'ចេញក្តៅៗ' :'Hot Release'),
             _buildPlaylistCard(
                 'https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2023%2F07%2Fnas-magic-2-new-album-release-date-info-000.jpg?w=960&cbr=1&q=90&fit=max',
-                'Top Rap song'),
+                widget.isKhmer ? 'កំពូលចម្រៀង Rap' :'Top Rap song'),
             _buildPlaylistCard(
                 'https://i.pinimg.com/736x/98/00/6d/98006d0918e4193f9e75d409554a4f22.jpg',
-                'Most view'),
+                widget.isKhmer ? 'ចំនួនស្តាប់ច្រេីន​​​' :'Most Listen'),
           ],
         ),
       ),
@@ -283,13 +285,13 @@ class _HomePageState extends State<HomePage> {
           children: [
             _buildPlaylistCard(
                 'https://newstreamasia.com/wp-content/uploads/2022/08/Photo-2_-Poster-of-Nicole-Niki-North-American-Tour-2022.jpg',
-                'Khmer Music'),
+                widget.isKhmer ? 'ចម្រៀងខ្មែរ' :'Khmer Music'),
             _buildPlaylistCard(
                 'https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2023%2F07%2Fnas-magic-2-new-album-release-date-info-000.jpg?w=960&cbr=1&q=90&fit=max',
-                'Top Rap song'),
+                widget.isKhmer ? 'កំពូលចម្រៀង Rap' :'Top Rap song'),
             _buildPlaylistCard(
                 'https://pagesix.com/wp-content/uploads/sites/3/2024/02/taylor-swift-reputation-album-artwork-75767407.jpg?quality=75&strip=all&w=1016',
-                'Most view'),
+                widget.isKhmer ? 'ចំនួនស្តាប់ច្រេីន​​​' :'Most Listen'),
           ],
         ),
       ),
@@ -304,13 +306,13 @@ class _HomePageState extends State<HomePage> {
           children: [
             _buildPlaylistCard(
                 'https://preview.redd.it/the-new-album-will-drop-on-v0-3kmpqebpf9bc1.jpeg?auto=webp&s=f4c41781c9892843cc57dbbe2ef93b68ad0bdc0b',
-                'Thai Music'),
+                widget.isKhmer ? 'ចម្រៀងថៃ' :'Thai Music'),
             _buildPlaylistCard(
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4EIHx7Owv06NX4SdS3xs5whZkCILwGies7Q&s',
-                'Chill Vibe'),
+                widget.isKhmer ? 'ស្តាប់ chill' :'Chill Vibe'),
             _buildPlaylistCard(
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNdmow0QMYeT5iWWjssPAq9UiYCzhKRu6eOA&s',
-                'Sad Music'),
+                widget.isKhmer ? 'ចម្រៀងកំសត់' :'Sad Music'),
           ],
         ),
       ),
@@ -324,14 +326,14 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           children: [
             _buildPlaylistCard(
-                'https://newstreamasia.com/wp-content/uploads/2022/08/Photo-2_-Poster-of-Nicole-Niki-North-American-Tour-2022.jpg',
-                'Thai Music'),
+                'https://preview.redd.it/the-new-album-will-drop-on-v0-3kmpqebpf9bc1.jpeg?auto=webp&s=f4c41781c9892843cc57dbbe2ef93b68ad0bdc0b',
+                widget.isKhmer ? 'ចម្រៀងថៃ' :'Thai Music'),
             _buildPlaylistCard(
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxsJyC5OGPp5ALImXY__ej_6UdTsgF4voUZA&s',
                 'Taylor Swift'),
             _buildPlaylistCard(
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnEU7htzxtnigh3i5w1-tnl7l_1kIa_O0cWw&s',
-                'Pop Music'),
+                widget.isKhmer ? 'តន្ត្រី Pop' :'Pop Music'),
           ],
         ),
       ),
@@ -372,13 +374,13 @@ class _HomePageState extends State<HomePage> {
           children: [
             _buildCollectionCard(
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ74F_RM69jaAlsm1EDvTF7KE16ziLofOdeLw&s',
-                'New Albums'),
+                widget.isKhmer ? 'អាល់ប៊ុមថ្មី' :'New Albums'),
             _buildCollectionCard(
                 'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
-                'Hits song'),
+                widget.isKhmer ? 'ចម្រៀងដែល HIT' :'Hits song'),
             _buildCollectionCard(
                 'https://rukminim2.flixcart.com/image/850/1000/kb5eikw0/poster/v/p/k/large-music-posters-for-room-set-of-6-best-music-posters-vintage-original-imafskknrpzzfcpq.jpeg?q=90&crop=false',
-                'Trending'),
+                widget.isKhmer ? 'ចម្រៀងពេញនិយម' :'Trending'),
          
           ],
         ),

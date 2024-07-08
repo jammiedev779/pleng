@@ -1,12 +1,15 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:pleng/group/components/library_menu.dart';
 import 'package:pleng/group/headbar/head_bar.dart';
-import 'package:provider/provider.dart';
 import 'package:pleng/provider/theme_notifier.dart';
+import 'package:provider/provider.dart';
+
 
 class Library extends StatefulWidget {
+  final bool isKhmer;
+  final VoidCallback toggleLanguage;
+
+  Library({required this.isKhmer, required this.toggleLanguage});
   @override
   _LibraryState createState() => _LibraryState();
 }
@@ -19,7 +22,6 @@ class _LibraryState extends State<Library> {
       _selectedTabIndex = index;
     });
   }
-
   void _toggleLanguage() {
     setState(() {
       _isKhmer = !_isKhmer;
@@ -29,14 +31,17 @@ class _LibraryState extends State<Library> {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = context.watch<ThemeNotifier>();
-
     return Scaffold(
-      appBar: HeadBar(onLanguageToggle: _toggleLanguage, isKhmer: _isKhmer),
+      appBar: HeadBar(onLanguageToggle: widget.toggleLanguage, isKhmer: widget.isKhmer),
       body: Container(
-        color: themeNotifier.isDarkMode ? Colors.grey[900] : Color(0xFFffffff),
+        color: Colors.grey[900],
         child: Column(
           children: [
-            LibraryMenu(onTabSelected: _onTabSelected),
+            LibraryMenu(
+              onTabSelected: _onTabSelected,
+              isKhmer: widget.isKhmer,
+              toggleLanguage: widget.toggleLanguage,
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -56,36 +61,18 @@ class _LibraryState extends State<Library> {
   }
 
   Widget _buildAll() {
-    return _buildContent();
-  }
-
-  Widget _buildPlaylist() {
-    return _buildContent();
-  }
-
-  Widget _buildAlbums() {
-    return _buildContent();
-  }
-
-  Widget _buildPodCast() {
-    return _buildContent();
-  }
-
-  Widget _buildContent() {
-    final themeNotifier = context.watch<ThemeNotifier>();
-
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              // Action for creating a playlist
+            },
             child: Container(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: themeNotifier.isDarkMode
-                    ? Colors.grey[850]
-                    : Colors.grey[300],
+                color: Colors.grey[850], // Background color similar to the UI
                 borderRadius: BorderRadius.circular(8.0),
               ),
               child: Column(
@@ -93,17 +80,14 @@ class _LibraryState extends State<Library> {
                   Icon(
                     Icons.add,
                     size: 40.0,
-                    color:
-                        themeNotifier.isDarkMode ? Colors.white : Colors.black,
+                    color: Colors.white, // Icon color similar to the UI
                   ),
                   SizedBox(height: 8.0),
                   Text(
-                    'Create a playlist',
+                    widget.isKhmer ? 'បង្កើតបញ្ជីចម្រៀង' :'Create a playlist',
                     style: TextStyle(
                       fontSize: 18.0,
-                      color: themeNotifier.isDarkMode
-                          ? Colors.white
-                          : Colors.black,
+                      color: Colors.white, // Text color similar to the UI
                     ),
                   ),
                 ],
@@ -118,28 +102,24 @@ class _LibraryState extends State<Library> {
                 Icon(
                   Icons.headset,
                   size: 100.0,
-                  color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
+                  color: Colors.white, // Adjust the color as needed
                 ),
                 SizedBox(height: 16.0),
                 Text(
-                  'Nothing has been Added',
+                  widget.isKhmer ? 'គ្មានអ្វីត្រូវបានបញ្ចូល' :'Nothing has been Added',
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
-                    color: themeNotifier.isDarkMode
-                        ? Colors.white
-                        : Colors.black, // Adjust the color as needed
+                    color: Colors.white, // Adjust the color as needed
                   ),
                 ),
                 SizedBox(height: 8.0),
                 Text(
-                  'Browse songs, playlists, podcasts and albums to add to your favourites',
+                  widget.isKhmer ? 'រកមើលបទចម្រៀង បញ្ជីចាក់ ផតខាស និងអាល់ប៊ុម ដើម្បីបន្ថែមទៅចំណូលចិត្តរបស់អ្នក។' :'Browse songs, playlists, podcasts and albums to add to your favourites',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16.0,
-                    color: themeNotifier.isDarkMode
-                        ? Colors.white
-                        : Colors.black, // Adjust the color as needed
+                    color: Colors.white, // Adjust the color as needed
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -151,7 +131,7 @@ class _LibraryState extends State<Library> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
                   ),
-                  child: Text('Explore Now'),
+                  child: Text(widget.isKhmer ? 'ស្វែងរក' :'Explore Now'),
                 ),
               ],
             ),
@@ -159,5 +139,15 @@ class _LibraryState extends State<Library> {
         ],
       ),
     );
+  }
+
+  Widget _buildPlaylist() {
+    return Container();
+  }
+  Widget _buildAlbums() {
+    return Container();
+  }
+  Widget _buildPodCast() {
+    return Container();
   }
 }

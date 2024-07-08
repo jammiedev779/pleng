@@ -4,8 +4,14 @@ import 'package:pleng/provider/theme_notifier.dart';
 
 class LibraryMenu extends StatefulWidget {
   final Function(int) onTabSelected;
+  final bool isKhmer;
+  final VoidCallback toggleLanguage;
 
-  LibraryMenu({required this.onTabSelected});
+  LibraryMenu({
+    required this.onTabSelected,
+    required this.isKhmer,
+    required this.toggleLanguage,
+  });
 
   @override
   _LibraryMenuState createState() => _LibraryMenuState();
@@ -29,10 +35,10 @@ class _LibraryMenuState extends State<LibraryMenu> {
       color: themeNotifier.isDarkMode ? Colors.grey[900] : Color(0xFFffffff),
       child: Row(
         children: [
-          _buildTabItem(0, 'All'),
-          _buildTabItem(1, 'Playlists'),
-          _buildTabItem(2, 'Albums'),
-          _buildTabItem(3, 'PodCast'),
+          _buildTabItem(0, widget.isKhmer ? 'ទាំងអស់' :'All'),
+          _buildTabItem(1, widget.isKhmer ? 'បញ្ជីចម្រៀង' :'Playlists'),
+          _buildTabItem(2, widget.isKhmer ? 'អាល់ប៊ុម' :'Albums'),
+          _buildTabItem(3, widget.isKhmer ? 'ផតខាស់' :'PodCast'),
         ],
       ),
     );

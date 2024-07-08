@@ -4,11 +4,24 @@ import 'package:provider/provider.dart';
 import 'package:pleng/provider/theme_notifier.dart';
 
 class Search extends StatefulWidget {
+ final bool isKhmer;
+  final VoidCallback toggleLanguage;
+
+  Search({required this.isKhmer, required this.toggleLanguage});
   @override
   _SearchState createState() => _SearchState();
 }
 
 class _SearchState extends State<Search> {
+  int _selectedTabIndex = 0;
+  Set<int> _viewedStories = {};
+
+  void _onTabSelected(int index) {
+    setState(() {
+      _selectedTabIndex = index;
+    });
+  }
+  
   List<String> images = [
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQstSLn_yCOFPQ66fJ17gyaUpHsuE_l3dLNow&s",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwme89cM8YZvHcybGrZl_Obd9U9p5QabozJQ&s",
@@ -41,7 +54,7 @@ class _SearchState extends State<Search> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themeNotifier.isDarkMode ? Colors.black : Colors.white,
-        title: Text('Search', style: TextStyle(color: themeNotifier.isDarkMode ?Colors.white : Colors.black)),
+        title: Text(widget.isKhmer ? 'ស្វែងរក' : 'Search', style: TextStyle(color: themeNotifier.isDarkMode ?Colors.white : Colors.black)),
         centerTitle: true,
       ),
       body: Container(
@@ -54,7 +67,7 @@ class _SearchState extends State<Search> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   decoration: InputDecoration(
-                    hintText: 'Music, Podcast, Artist and more',
+                    hintText: widget.isKhmer ? 'តន្ត្រី, ផតខាស, តន្រ្តីករ, និង ផ្សេងៗ' :'Music, Podcast, Artist and more',
                     hintStyle: TextStyle(color: themeNotifier.isDarkMode ? Colors.white : Colors.black),
                     prefixIcon: Icon(Icons.search, color: themeNotifier.isDarkMode ? Colors.white : Colors.black),
                     border: OutlineInputBorder(
@@ -70,7 +83,7 @@ class _SearchState extends State<Search> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Recommended for you',
+                  widget.isKhmer ? 'ណែនាំសម្រាប់អ្នក' :'Recommended for you',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

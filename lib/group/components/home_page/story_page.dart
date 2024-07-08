@@ -4,7 +4,8 @@ class StoryPage extends StatefulWidget {
   final List<Map<String, String>> stories;
   final int initialIndex;
 
-  const StoryPage({Key? key, required this.stories, required this.initialIndex}) : super(key: key);
+  const StoryPage({Key? key, required this.stories, required this.initialIndex,}) : super(key: key);
+  
 
   @override
   _StoryPageState createState() => _StoryPageState();

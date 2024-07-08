@@ -8,11 +8,16 @@ import 'package:provider/provider.dart';
 import 'package:pleng/provider/theme_notifier.dart';
 
 class Video extends StatefulWidget {
+  final bool isKhmer;
+  final VoidCallback toggleLanguage;
+
+  Video({required this.isKhmer, required this.toggleLanguage});
   @override
   _VideoState createState() => _VideoState();
 }
 
 class _VideoState extends State<Video> {
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isKhmer = false;
 
@@ -29,7 +34,7 @@ class _VideoState extends State<Video> {
 
     return Scaffold(
       key: _scaffoldKey,
-      appBar: HeadBar(onLanguageToggle: _toggleLanguage, isKhmer: _isKhmer),
+      appBar: HeadBar(onLanguageToggle: widget.toggleLanguage, isKhmer: widget.isKhmer),
       body: Container(
         color: themeNotifier.isDarkMode ? Colors.grey[900] : Color(0xFFffffff),
         alignment: Alignment.center,
@@ -37,19 +42,19 @@ class _VideoState extends State<Video> {
           children: [
             Container(
               height: 300,
-              child: MusicVideo(),
+              child: MusicVideo(isKhmer: widget.isKhmer, toggleLanguage: widget.toggleLanguage),
             ),
             Container(
               height: 300,
-              child: LivePerformance(),
+              child: LivePerformance(isKhmer: widget.isKhmer, toggleLanguage: widget.toggleLanguage),
             ),
             Container(
               height: 300,
-              child: KhmerMusicScroll(),
+              child: KhmerMusicScroll(isKhmer: widget.isKhmer, toggleLanguage: widget.toggleLanguage),
             ),
             Container(
               height: 300,
-              child: NewAgeScroll(),
+              child: NewAgeScroll(isKhmer: widget.isKhmer, toggleLanguage: widget.toggleLanguage),
             ),
           ],
         ),
