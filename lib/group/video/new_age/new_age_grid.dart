@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:pleng/group/video/video_data.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:pleng/provider/theme_notifier.dart';
 
 class NewAgeGrid extends StatefulWidget {
   @override
@@ -11,7 +13,7 @@ class NewAgeGrid extends StatefulWidget {
 
 class _VideoState extends State<NewAgeGrid> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  
+
   late List<YoutubePlayerController> _controller;
 
   @override
@@ -36,47 +38,57 @@ class _VideoState extends State<NewAgeGrid> {
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = context.watch<ThemeNotifier>();
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF1f1f1f),
+        backgroundColor:
+            themeNotifier.isDarkMode ? Color(0xFF1f1f1f) : Color(0xFFffffff),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back to the previous page
+          },
+        ),
         title: Text(
           "New Age",
           style: TextStyle(
-            color: Colors.white,
+            color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
           ),
         ),
         centerTitle: true,
       ),
       key: _scaffoldKey,
       body: Container(
-        color: Colors.grey[900],
+        color: themeNotifier.isDarkMode ? Colors.grey[900] : Color(0xFFffffff),
         child: _buildVideoList(),
       ),
     );
   }
 
   Widget _buildVideoList() {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, 
-        crossAxisSpacing: 8.0, 
-        childAspectRatio: 0.9,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 8.0,
+          childAspectRatio: 0.9,
+        ),
+        itemCount: videoURLs.length,
+        itemBuilder: (context, index) {
+          return _buildVideoItem(
+            videoURL: videoURLs[index],
+            title: videoTitles[index],
+            singer: videoSinger[index],
+            views: videoViews[index],
+            controller: _controller[index],
+          );
+        },
       ),
-      itemCount: videoURLs.length,
-      itemBuilder: (context, index) {
-        return _buildVideoItem(
-          videoURL: videoURLs[index],
-          title: videoTitles[index],
-          singer: videoSinger[index],
-          views: videoViews[index],
-          controller: _controller[index],
-        );
-      },
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildVideoItem({
     required String videoURL,
@@ -86,6 +98,7 @@ class _VideoState extends State<NewAgeGrid> {
     required YoutubePlayerController controller,
   }) {
     final videoID = YoutubePlayer.convertUrlToId(videoURL);
+    final themeNotifier = context.watch<ThemeNotifier>();
 
     return Container(
       margin: const EdgeInsets.all(8.0),
@@ -107,7 +120,7 @@ class _VideoState extends State<NewAgeGrid> {
           Text(
             title,
             style: TextStyle(
-              color: Colors.white,
+              color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
@@ -115,7 +128,7 @@ class _VideoState extends State<NewAgeGrid> {
           Text(
             singer,
             style: TextStyle(
-              color: Colors.white,
+              color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
               fontSize: 12,
             ),
           ),

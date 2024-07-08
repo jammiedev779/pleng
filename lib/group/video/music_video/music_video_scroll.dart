@@ -73,7 +73,9 @@ class _VideoState extends State<MusicVideo> {
           Text(
             title,
             style: TextStyle(
-                color: themeNotifier.isDarkMode ? Colors.white : Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+                color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
           ),
           GestureDetector(
             onTap: () {

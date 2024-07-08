@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pleng/group/headbar/head_bar.dart';
+import 'package:pleng/group/video/khmer_music/khmer_music_scroll.dart';
+import 'package:pleng/group/video/live_performance/live_performance.dart';
 import 'package:pleng/group/video/music_video/music_video_scroll.dart';
+import 'package:pleng/group/video/new_age/new_age_scroll.dart';
 import 'package:provider/provider.dart';
 import 'package:pleng/provider/theme_notifier.dart';
 
@@ -20,6 +23,7 @@ class _VideoState extends State<Video> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     final themeNotifier = context.watch<ThemeNotifier>();
 
@@ -29,7 +33,26 @@ class _VideoState extends State<Video> {
       body: Container(
         color: themeNotifier.isDarkMode ? Colors.grey[900] : Color(0xFFffffff),
         alignment: Alignment.center,
-        child: MusicVideo(),
+        child: ListView(
+          children: [
+            Container(
+              height: 300,
+              child: MusicVideo(),
+            ),
+            Container(
+              height: 300,
+              child: LivePerformance(),
+            ),
+            Container(
+              height: 300,
+              child: KhmerMusicScroll(),
+            ),
+            Container(
+              height: 300,
+              child: NewAgeScroll(),
+            ),
+          ],
+        ),
       ),
     );
   }

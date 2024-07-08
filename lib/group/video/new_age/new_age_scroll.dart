@@ -1,11 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:pleng/group/video/music_video/music_video_grid.dart';
 import 'package:pleng/group/video/new_age/new_age_grid.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:pleng/group/video/video_data.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:pleng/provider/theme_notifier.dart';
 
 class NewAgeScroll extends StatefulWidget {
   @override
@@ -39,10 +40,12 @@ class _VideoState extends State<NewAgeScroll> {
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = context.watch<ThemeNotifier>();
+
     return Scaffold(
       key: _scaffoldKey,
       body: Container(
-        color: Colors.grey[900],
+        color: themeNotifier.isDarkMode ? Colors.grey[900] : Color(0xFFffffff),
         child: _buildBody(),
       ),
     );
@@ -59,6 +62,8 @@ class _VideoState extends State<NewAgeScroll> {
   }
 
   Widget _buildScrollVideo(String title) {
+    final themeNotifier = context.watch<ThemeNotifier>();
+
     return Padding(
       padding: const EdgeInsets.only(
           left: 16.0, top: 16.0, bottom: 12.0, right: 16.0),
@@ -68,7 +73,9 @@ class _VideoState extends State<NewAgeScroll> {
           Text(
             title,
             style: TextStyle(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
           ),
           GestureDetector(
             onTap: () {
@@ -84,7 +91,7 @@ class _VideoState extends State<NewAgeScroll> {
             },
             child: Icon(
               Icons.chevron_right,
-              color: Colors.white,
+              color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
               size: 28, // Increase size to make it more prominent
             ),
           ),
@@ -122,6 +129,7 @@ class _VideoState extends State<NewAgeScroll> {
     required YoutubePlayerController controller,
   }) {
     final videoID = YoutubePlayer.convertUrlToId(videoURL);
+    final themeNotifier = context.watch<ThemeNotifier>();
 
     return Container(
       margin: const EdgeInsets.only(left: 16.0, right: 8.0),
@@ -143,7 +151,7 @@ class _VideoState extends State<NewAgeScroll> {
           Text(
             title,
             style: TextStyle(
-              color: Colors.white,
+              color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -151,7 +159,7 @@ class _VideoState extends State<NewAgeScroll> {
           Text(
             singer,
             style: TextStyle(
-              color: Colors.white,
+              color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
               fontSize: 14,
             ),
           ),

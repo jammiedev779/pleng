@@ -5,6 +5,8 @@ import 'package:pleng/group/video/live_performance/live_performance_grid.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:pleng/group/video/video_data.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:pleng/provider/theme_notifier.dart';
 
 class LivePerformance extends StatefulWidget {
   @override
@@ -37,10 +39,12 @@ class _VideoState extends State<LivePerformance> {
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = context.watch<ThemeNotifier>();
+
     return Scaffold(
       key: _scaffoldKey,
       body: Container(
-        color: Colors.grey[900],
+        color: themeNotifier.isDarkMode ? Colors.grey[900] : Color(0xFFffffff),
         child: _buildBodyLivePerformance(),
       ),
     );
@@ -57,6 +61,8 @@ class _VideoState extends State<LivePerformance> {
   }
 
   Widget _buildScrollVideo(String title) {
+    final themeNotifier = context.watch<ThemeNotifier>();
+
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, top: 16.0, bottom: 12.0, right: 16.0),
       child: Row(
@@ -64,7 +70,7 @@ class _VideoState extends State<LivePerformance> {
         children: [
           Text(title,
               style: TextStyle(
-                  color: Colors.white,
+                  color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.bold)),
           GestureDetector(
@@ -78,7 +84,7 @@ class _VideoState extends State<LivePerformance> {
             },
             child: Icon(
               Icons.chevron_right,
-              color: Colors.white,
+              color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
               size: 28, // Increase size to make it more prominent
             ),
           ),
@@ -116,6 +122,7 @@ class _VideoState extends State<LivePerformance> {
     required YoutubePlayerController controller,
   }) {
     final videoID = YoutubePlayer.convertUrlToId(videoURL);
+    final themeNotifier = context.watch<ThemeNotifier>();
 
     return Container(
       margin: const EdgeInsets.only(left: 16.0, right: 8.0),
@@ -137,7 +144,7 @@ class _VideoState extends State<LivePerformance> {
           Text(
             title,
             style: TextStyle(
-              color: Colors.white,
+              color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -145,7 +152,7 @@ class _VideoState extends State<LivePerformance> {
           Text(
             singer,
             style: TextStyle(
-              color: Colors.white,
+              color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
               fontSize: 14,
             ),
           ),
