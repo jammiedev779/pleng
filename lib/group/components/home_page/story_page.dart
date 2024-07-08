@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class StoryPage extends StatefulWidget {
-  final String imageUrl;
-  final String userName;
+  final List<Map<String, String>> stories;
+  final int initialIndex;
 
-  const StoryPage({Key? key, required this.imageUrl, required this.userName}) : super(key: key);
+  const StoryPage({Key? key, required this.stories, required this.initialIndex}) : super(key: key);
 
   @override
   _StoryPageState createState() => _StoryPageState();
@@ -12,18 +12,32 @@ class StoryPage extends StatefulWidget {
 
 class _StoryPageState extends State<StoryPage> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.initialIndex;
     _controller = AnimationController(
       duration: Duration(seconds: 10),
       vsync: this,
-    )..forward().whenComplete(() => Navigator.of(context).pop());
+    )..forward().whenComplete(_nextStory);
 
     _controller.addListener(() {
       setState(() {});
     });
+  }
+
+  void _nextStory() {
+    if (_currentIndex < widget.stories.length - 1) {
+      setState(() {
+        _currentIndex++;
+        _controller.reset();
+        _controller.forward().whenComplete(_nextStory);
+      });
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 
   @override
@@ -41,7 +55,7 @@ class _StoryPageState extends State<StoryPage> with SingleTickerProviderStateMix
           Center(
             child: AspectRatio( 
               aspectRatio: 9 / 16,
-              child: Image.network(widget.imageUrl, fit: BoxFit.cover),
+              child: Image.network(widget.stories[_currentIndex]['imageUrl']!, fit: BoxFit.cover),
             ),
           ),
           Positioned(
@@ -62,19 +76,18 @@ class _StoryPageState extends State<StoryPage> with SingleTickerProviderStateMix
                 Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage: NetworkImage(widget.imageUrl),
+                      backgroundImage: NetworkImage(widget.stories[_currentIndex]['imageUrl']!),
                     ),
                     SizedBox(width: 8),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(widget.userName, style: TextStyle(color: Colors.white, fontSize: 18)),
+                        Text(widget.stories[_currentIndex]['userName']!, style: TextStyle(color: Colors.white, fontSize: 18)),
                         Text('1h ago', style: TextStyle(color: Colors.white70, fontSize: 14)),
                       ],
                     ),
                   ],
                 ),
-      
               ],
             ),
           ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pleng/group/components/home_page/discover_playlists.dart';
-import 'package:pleng/group/components/home_page/music_charts.dart';
+import 'package:pleng/group/components/home_page/detail_music.dart';
 import 'package:pleng/group/components/home_page/story_page.dart';
 import 'package:pleng/group/components/discover_menu.dart';
 import 'package:pleng/group/headbar/head_bar.dart';
@@ -12,6 +11,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedTabIndex = 0;
+  Set<int> _viewedStories = {};
+  bool _isKhmer = false;
 
   void _onTabSelected(int index) {
     setState(() {
@@ -19,10 +20,16 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _toggleLanguage() {
+    setState(() {
+      _isKhmer = !_isKhmer;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HeadBar(),
+     appBar: HeadBar(onLanguageToggle: _toggleLanguage, isKhmer: _isKhmer),
       body: Container(
         color: Colors.grey[900],
         child: Column(
@@ -54,54 +61,70 @@ class _HomePageState extends State<HomePage> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _buildAvatar(context, 'https://imageio.forbes.com/specials-images/imageserve/65efb06d83b262e59c7fb3e9/Talib-Kweli-Wireless-Festival-2015/960x0.jpg?height=473&width=711&fit=bounds', 'PlockNun'),
-                _buildAvatar(context, 'https://variety.com/wp-content/uploads/2024/02/Eminem.jpg', 'GayChhi'),
-                _buildAvatar(context, 'https://media.gq.com/photos/62e82bea11673c699e05492d/master/pass/bs5a3113.JPG', 'Kendrick'),
-                _buildAvatar(context, 'https://cdn.britannica.com/85/247585-050-13C54622/Rapper-Juice-WRLD-performs-Rolling-Loud-Festival-Los-Angeles-2018.jpg', 'Juice wrld'),
-                _buildAvatar(context, 'https://static01.nyt.com/images/2021/12/08/arts/06drake2/06drake2-mediumSquareAt3X.jpg', 'Drake'),
-               
+                _buildAvatar(context, 'https://imageio.forbes.com/specials-images/imageserve/65efb06d83b262e59c7fb3e9/Talib-Kweli-Wireless-Festival-2015/960x0.jpg?height=473&width=711&fit=bounds', 'PlockNun', 0),
+                _buildAvatar(context, 'https://variety.com/wp-content/uploads/2024/02/Eminem.jpg', 'GayChhi', 1),
+                _buildAvatar(context, 'https://media.gq.com/photos/62e82bea11673c699e05492d/master/pass/bs5a3113.JPG', 'Kendrick', 2),
+                _buildAvatar(context, 'https://cdn.britannica.com/85/247585-050-13C54622/Rapper-Juice-WRLD-performs-Rolling-Loud-Festival-Los-Angeles-2018.jpg', 'Juice wrld', 3),
+                _buildAvatar(context, 'https://static01.nyt.com/images/2021/12/08/arts/06drake2/06drake2-mediumSquareAt3X.jpg', 'Drake', 4),
               ],
             ),
           ),
         ),
-        _buildSectionTitle('Pleng Exclusive Releases'),
+        _buildSectionTitle(_isKhmer ? 'ការចេញផ្សាយចំនួនគួរអោយទាក់ទាញ' : 'Pleng Exclusive Releases'),
         _buildExclusiveReleases(),
-        _buildSectionTitle('Special Playlists by Pleng'),
+        _buildSectionTitle(_isKhmer ? 'បញ្ជីចម្រៀងពិសេសដោយ Pleng' : 'Special Playlists by Pleng'),
+        _buildSpecialPlaylists1(),
+        _buildSectionTitle(_isKhmer ? 'ចម្រៀងទាំងអស់' : 'All hits'),
         _buildSpecialPlaylists(),
-        _buildSectionTitle('All hits'),
-        _buildSpecialPlaylists(),
-        _buildSectionTitle('Pleng Collection'),
+        _buildSectionTitle(_isKhmer ? 'ការចងក្រងនៃ Pleng' : 'Pleng Collection'),
         _buildAllCollections(),
       ],
     );
   }
+
   Widget _buildMusicChart() {
     return Column(
       children: [
-        _buildSectionTitle('Special Playlists by Pleng'),
-        _buildSpecialPlaylists(),
-        _buildSectionTitle('All hits'),
-        _buildSpecialPlaylists(),
-      ],
-    );
-  }
-    Widget _buildDiscover() {
-    return Column(
-      children: [
-        _buildSectionTitle('Special Playlists by Pleng'),
-        _buildSpecialPlaylists(),
-        _buildSectionTitle('All hits'),
-        _buildSpecialPlaylists(),
+        _buildSectionTitle('Daily Choice'),
+        _buildSpecialPlaylists1(),
+        _buildSectionTitle('Top 50'),
+        _buildSpecialPlaylists2(),
+        _buildSectionTitle('Top 10 From Production Houses'),
+        _buildSpecialPlaylists3(),
       ],
     );
   }
 
-  Widget _buildAvatar(BuildContext context, String imageUrl, String name) {
+  Widget _buildDiscover() {
+    return Column(
+      children: [
+        _buildSectionTitle('Rainy Season Music'),
+        _buildSpecialPlaylists2(),
+        _buildSectionTitle('All hits'),
+        _buildSpecialPlaylists4(),
+      ],
+    );
+  }
+
+  Widget _buildAvatar(BuildContext context, String imageUrl, String name, int index) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => StoryPage(imageUrl: imageUrl, userName: name),
-        ));
+          builder: (context) => StoryPage(
+            stories: [
+              {'imageUrl': 'https://imageio.forbes.com/specials-images/imageserve/65efb06d83b262e59c7fb3e9/Talib-Kweli-Wireless-Festival-2015/960x0.jpg?height=473&width=711&fit=bounds', 'userName': 'PlockNun'},
+              {'imageUrl': 'https://variety.com/wp-content/uploads/2024/02/Eminem.jpg', 'userName': 'GayChhi'},
+              {'imageUrl': 'https://media.gq.com/photos/62e82bea11673c699e05492d/master/pass/bs5a3113.JPG', 'userName': 'Kendrick'},
+              {'imageUrl': 'https://cdn.britannica.com/85/247585-050-13C54622/Rapper-Juice-WRLD-performs-Rolling-Loud-Festival-Los-Angeles-2018.jpg', 'userName': 'Juice wrld'},
+              {'imageUrl': 'https://static01.nyt.com/images/2021/12/08/arts/06drake2/06drake2-mediumSquareAt3X.jpg', 'userName': 'Drake'},
+            ],
+            initialIndex: index,
+          ),
+        )).then((_) {
+          setState(() {
+            _viewedStories.add(index);
+          });
+        });
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -110,7 +133,7 @@ class _HomePageState extends State<HomePage> {
             Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.green, width: 3),
+                border: Border.all(color: _viewedStories.contains(index) ? Colors.grey : Colors.green, width: 3),
               ),
               child: CircleAvatar(
                 radius: 30,
@@ -146,16 +169,16 @@ class _HomePageState extends State<HomePage> {
           _buildExclusiveReleasesPage(
             [
               _buildExclusiveReleaseItem(
-                'https://i.pinimg.com/474x/4d/32/5c/4d325cf1ba05cb71037e17467e5083bd.jpg',
-                'Leak Tuk (Live Acoustic Cover)',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlfJdx5FsA2i1Lic8-PWPHeU7iay6x1j0mXw&s',
+                'Leak Tuk (Live Acoustic)',
               ),
               _buildExclusiveReleaseItem(
-                'https://union.illinois.edu/sites/default/files/2024-05/kLOopsjpSX1Wb1h8Vg57t7YEwD6.jpg',
-                'Love Consult (Live Acoustic)',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXMJJElshNUugqN70qKRVdQK6hAuCzQeqdlw&s',
+                'Slow dancing in the dark',
               ),
               _buildExclusiveReleaseItem(
-                'https://cdn.marvel.com/content/1x/thorloveandthunder_lob_crd_04.jpg',
-                'Linju Meas Bong (Live Acoustic Cover)',
+                'https://cdnb.artstation.com/p/assets/images/images/013/014/171/medium/catta-silva-polanco-joji.jpg?1537644864',
+                'Dude, she is not into you ',
               ),
             ],
           ),
@@ -171,9 +194,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildExclusiveReleaseItem(String imageUrl, String title) {
-    return ListTile(
-      leading: _buildNetworkImage(imageUrl),
-      title: Text(title, style: TextStyle(color: Colors.white)),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailMusic(imageUrl: imageUrl),
+          ),
+        );
+      },
+      child: ListTile(
+        leading: _buildNetworkImage(imageUrl),
+        title: Text(title, style: TextStyle(color: Colors.white)),
+      ),
     );
   }
 
@@ -190,7 +223,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
   Widget _buildSpecialPlaylists() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -199,14 +231,98 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           children: [
             _buildPlaylistCard(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5TsLPVDfw7wrmFrZrKoqh-YYKRRdjAX3RcQ&s',
+                'New Albums'),
+            _buildPlaylistCard(
                 'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
                 'Top Songs'),
             _buildPlaylistCard(
                 'https://rukminim2.flixcart.com/image/850/1000/kb5eikw0/poster/v/p/k/large-music-posters-for-room-set-of-6-best-music-posters-vintage-original-imafskknrpzzfcpq.jpeg?q=90&crop=false',
                 'Still Viral'),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget _buildSpecialPlaylists1() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
             _buildPlaylistCard(
-                'https://marketplace.canva.com/EAFIygYzkes/1/0/1131w/canva-blue-minimalist-concert-music-cover-poster-CGNgQz4KqL0.jpg',
-                'New Albums'),
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUNZpluHFU5qGG0j5KZz2IBWhY52XRNddp7Q&s',
+                'Hot Release'),
+            _buildPlaylistCard(
+                'https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2023%2F07%2Fnas-magic-2-new-album-release-date-info-000.jpg?w=960&cbr=1&q=90&fit=max',
+                'Top Rap song'),
+            _buildPlaylistCard(
+                'https://i.pinimg.com/736x/98/00/6d/98006d0918e4193f9e75d409554a4f22.jpg',
+                'Most view'),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget _buildSpecialPlaylists2() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            _buildPlaylistCard(
+                'https://newstreamasia.com/wp-content/uploads/2022/08/Photo-2_-Poster-of-Nicole-Niki-North-American-Tour-2022.jpg',
+                'Khmer Music'),
+            _buildPlaylistCard(
+                'https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2023%2F07%2Fnas-magic-2-new-album-release-date-info-000.jpg?w=960&cbr=1&q=90&fit=max',
+                'Top Rap song'),
+            _buildPlaylistCard(
+                'https://pagesix.com/wp-content/uploads/sites/3/2024/02/taylor-swift-reputation-album-artwork-75767407.jpg?quality=75&strip=all&w=1016',
+                'Most view'),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget _buildSpecialPlaylists3() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            _buildPlaylistCard(
+                'https://preview.redd.it/the-new-album-will-drop-on-v0-3kmpqebpf9bc1.jpeg?auto=webp&s=f4c41781c9892843cc57dbbe2ef93b68ad0bdc0b',
+                'Thai Music'),
+            _buildPlaylistCard(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4EIHx7Owv06NX4SdS3xs5whZkCILwGies7Q&s',
+                'Chill Vibe'),
+            _buildPlaylistCard(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNdmow0QMYeT5iWWjssPAq9UiYCzhKRu6eOA&s',
+                'Sad Music'),
+          ],
+        ),
+      ),
+    );
+  }
+    Widget _buildSpecialPlaylists4() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            _buildPlaylistCard(
+                'https://newstreamasia.com/wp-content/uploads/2022/08/Photo-2_-Poster-of-Nicole-Niki-North-American-Tour-2022.jpg',
+                'Thai Music'),
+            _buildPlaylistCard(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxsJyC5OGPp5ALImXY__ej_6UdTsgF4voUZA&s',
+                'Taylor Swift'),
+            _buildPlaylistCard(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnEU7htzxtnigh3i5w1-tnl7l_1kIa_O0cWw&s',
+                'Pop Music'),
           ],
         ),
       ),
@@ -281,6 +397,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  
 }

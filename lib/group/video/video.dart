@@ -1,26 +1,30 @@
-import 'package:flutter/material.dart';
-import 'package:pleng/group/headbar/head_bar.dart';
+// import 'package:flutter/material.dart';
+// import 'package:pleng/group/headbar/head_bar.dart';
 
-class Video extends StatelessWidget {
-  // const HomeScreen({super.key});
+// class Video extends StatefulWidget {
+//   @override
+//   _VideoState createState() => _VideoState();
+// }
 
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+// class _VideoState extends State<Video> {
+//   final _scaffoldKey = GlobalKey<ScaffoldState>();
+//   bool _isKhmer = false;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      body: _buildBody(),
-    );
-  }
+//   void _toggleLanguage() {
+//     setState(() {
+//       _isKhmer = !_isKhmer;
+//     });
+//   }
 
-  Widget _buildBody() {
-    return Scaffold(
-      appBar: HeadBar(),
-      body: Container(
-        color: Colors.grey[900],
-        alignment: Alignment.center,
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       key: _scaffoldKey,
+//       appBar: HeadBar(onLanguageToggle: _toggleLanguage, isKhmer: _isKhmer),
+//       body: Container(
+//         color: Colors.grey[900],
+//         alignment: Alignment.center,
+//       ),
+//     );
+//   }
+// }
