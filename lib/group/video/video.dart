@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pleng/group/headbar/head_bar.dart';
+import 'package:pleng/group/video/music_video/music_video_scroll.dart';
 
 class Video extends StatefulWidget {
   @override
@@ -24,6 +25,7 @@ class _VideoState extends State<Video> {
       body: Container(
         color: Colors.grey[900],
         alignment: Alignment.center,
+        child: MusicVideo(),
       ),
     );
   }
