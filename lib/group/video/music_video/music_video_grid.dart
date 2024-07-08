@@ -44,6 +44,13 @@ class _VideoState extends State<MusicVideoGrid> {
       appBar: AppBar(
         backgroundColor:
             themeNotifier.isDarkMode ? Color(0xFF1f1f1f) : Color(0xFFffffff),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back to the previous page
+          },
+        ),
         title: Text(
           "Music Video",
           style: TextStyle(
@@ -52,6 +59,7 @@ class _VideoState extends State<MusicVideoGrid> {
         ),
         centerTitle: true,
       ),
+
       key: _scaffoldKey,
       body: Container(
         color: themeNotifier.isDarkMode ? Colors.grey[900] : Color(0xFFffffff),
