@@ -38,7 +38,12 @@ class _MainMenuState extends State<MainMenu> {
   Widget _buildBody() {
     return IndexedStack(
       index: _selectedIndex,
-      children: [HomePage(),Search(), CurrentPlay(), Video(), Library()],
+      children: [HomePage(),Search(), CurrentPlay(
+      backgroundImageUrl:
+          'https://i.pinimg.com/474x/9c/94/7b/9c947b9164b28298ceecd86aa9b2defb.jpg',
+      musicTitle: 'BIRDS OF A FEATHER',
+      artist: 'Billie Eilish, FINNEAS',
+    ), Video(), Library()],
     );
   }
 
