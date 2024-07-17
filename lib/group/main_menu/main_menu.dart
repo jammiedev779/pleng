@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pleng/group/current_play/current_play.dart';
+import 'package:pleng/group/current_play/current_play_data.dart';
 import 'package:pleng/group/home_page/all_home.dart';
 import 'package:pleng/group/library/library.dart';
 import 'package:pleng/group/search/search.dart';
@@ -45,7 +45,7 @@ class _MainMenuState extends State<MainMenu> {
       children: [
         HomePage(isKhmer: widget.isKhmer, toggleLanguage: widget.toggleLanguage),
         Search(isKhmer: widget.isKhmer, toggleLanguage: widget.toggleLanguage),
-        CurrentPlay(),
+        CurrentPlayData(),
         Video(isKhmer: widget.isKhmer, toggleLanguage: widget.toggleLanguage),
         Library(isKhmer: widget.isKhmer, toggleLanguage: widget.toggleLanguage),
       ],
