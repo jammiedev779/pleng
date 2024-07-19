@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pleng/group/developer/display_user.dart';
 import 'package:provider/provider.dart';
 import 'package:pleng/provider/theme_notifier.dart';
 
@@ -44,7 +45,15 @@ class _HeadBarState extends State<HeadBar> {
         ),
         CircleAvatar(
           backgroundColor: Color(0xFF363636),
-          child: Icon(Icons.person, color: Colors.white),
+          child: IconButton(
+            icon: Icon(Icons.person, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DisplayUser()),
+              );
+            },
+          ),
         ),
         SizedBox(width: 16),
       ],
